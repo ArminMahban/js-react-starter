@@ -8,10 +8,10 @@ class NoteTitle extends Component {
 
     this.state = {
       text: props.text,
+      isEditing: props.isEditing,
     };
     this.onTrashClicked = this.onTrashClicked.bind(this);
     this.onEditClicked = this.onEditClicked.bind(this);
-    this.onDragClicked = this.onDragClicked.bind(this);
   }
 
   onTrashClicked() {
@@ -21,6 +21,7 @@ class NoteTitle extends Component {
 
   onEditClicked() {
     console.log('edit clicked');
+    this.props.onEditClicked();
   }
 
   onDragClicked() {
@@ -36,11 +37,17 @@ class NoteTitle extends Component {
       marginRight: '10px',
       cursor: 'pointer',
     };
+    let editIcon;
+    if (this.props.isEditing) {
+      editIcon = <FontAwesome onClick={this.onEditClicked} style={iconStyle} name="check" />;
+    } else {
+      editIcon = <FontAwesome onClick={this.onEditClicked} style={iconStyle} name="pencil" />;
+    }
     return (
       <div style={titleStyle}>
         <h1> {this.state.text} </h1>
         <h1>
-          <FontAwesome onClick={this.onEditClicked} style={iconStyle} name="pencil" />
+          {editIcon}
           <FontAwesome onClick={this.onTrashClicked} style={iconStyle} name="trash" />
         </h1>
       </div>

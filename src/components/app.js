@@ -11,7 +11,7 @@ class App extends Component {
 
     const newNote = {
       title: 'tester',
-      text: '',
+      text: 'subtitle',
       x: 200,
       y: 100,
     };
@@ -29,7 +29,7 @@ class App extends Component {
     console.log(value);
     const newNote = {
       title: value,
-      text: '',
+      text: 'subtitle',
       x: 400,
       y: 100,
     };
@@ -52,7 +52,7 @@ class App extends Component {
       <div>
         <CreateBar onSubmitPressed={newTitle => this.onSubmitPressed(newTitle)} />
         {this.state.notes.map((note, id) =>
-          <Note onDeletePressed={idToDelete => this.onDeletePressed(idToDelete)} id={id} title={note.title} text={note.text} x={note.x} y={note.y} />
+          <Note onDeletePressed={idToDelete => this.onDeletePressed(idToDelete)} id={id} note={note} />
         )}
       </div>
     );

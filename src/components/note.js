@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import Draggable from 'react-draggable';
 import NoteTitle from './note_title';
+import NoteBody from './note_body2';
 
 class Note extends Component {
   constructor(props) {
@@ -10,17 +11,26 @@ class Note extends Component {
 
     this.state = {
       id: props.id,
-      title: props.title,
-      text: props.text,
-      x: props.x,
-      y: props.y,
+      note: props.note,
+      isEditing: false,
     };
     this.handleDrag = this.handleDrag.bind(this);
     this.onDeletePressed = this.onDeletePressed.bind(this);
+    this.onEditClicked = this.onEditClicked.bind(this);
+    console.log(props.note.text);
   }
 
   onDeletePressed(id) {
     this.props.onDeletePressed(this.state.id);
+  }
+
+  onEditClicked() {
+    if (this.state.isEditing) {
+      this.setState({ isEditing: false });
+    } else {
+      this.setState({ isEditing: true });
+      console.log(this.state.isEditing);
+    }
   }
 
   handleDrag(event, data) {
@@ -41,13 +51,13 @@ class Note extends Component {
     return (
       <Draggable
         axis="both"
-        defaultPosition={{ x: this.state.x, y: this.state.y }}
+        defaultPosition={{ x: this.state.note.x, y: this.state.note.y }}
         position={null}
         onDrag={this.handleDrag}
       >
         <div id="note" style={noteStyle}>
-          <NoteTitle onDeletePressed={this.onDeletePressed} text={this.state.title} />
-          <h3> {this.state.text} </h3>
+          <NoteTitle isEditing={this.state.isEditing} onEditClicked={this.onEditClicked} onDeletePressed={this.onDeletePressed} text={this.state.note.title} />
+          <NoteBody isEditing={this.state.isEditing} text={this.state.note.text} />
         </div>
       </Draggable>
     );
